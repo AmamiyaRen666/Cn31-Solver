@@ -47,6 +47,8 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY necap.py .
+COPY dashboard.html .
+COPY dashboard-assets/ ./dashboard-assets/
 COPY yidun_proxyless.py .
 COPY dun163.js .
 COPY net.pkl .
