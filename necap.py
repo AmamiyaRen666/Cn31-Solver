@@ -6,7 +6,7 @@ import time
 import json
 import threading
 from datetime import datetime
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -51,6 +51,8 @@ generation_stats = {
 tokens_cache = []
 token_lock = threading.Lock()
 TOKEN_FILE = "/app/validated_tokens.txt"
+_BOOT_TS = time.time()
+_DASH_STATS = {"served": 0, "peak_queue": 0}
 
 def read_tokens_from_file():
 
@@ -266,6 +268,7 @@ def get_token():
     with token_lock:
         if tokens_cache:
             token = tokens_cache.pop(0)
+            _DASH_STATS["served"] += 1
             return jsonify({
                 "token": token,
                 "remaining": len(tokens_cache)
@@ -287,12 +290,58 @@ def get_tokens():
         count = min(n, len(tokens_cache))
         result = tokens_cache[:count]
         tokens_cache = tokens_cache[count:]
+        _DASH_STATS["served"] += count
 
         return jsonify({
             "tokens": result,
             "count": len(result),
             "remaining": len(tokens_cache)
         })
+
+# ── Dashboard (UI diambil dari mitz-cn31, data dari solver asli) ──
+_DASH_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)))
+
+@app.route('/dashboard')
+def dashboard():
+    return send_from_directory(_DASH_DIR, 'dashboard.html')
+
+@app.route('/dashboard-assets/<path:filename>')
+def dashboard_assets(filename):
+    return send_from_directory(os.path.join(_DASH_DIR, 'dashboard-assets'), filename)
+
+@app.route('/stats', methods=['GET'])
+def dash_stats():
+    get_new_tokens()
+    with token_lock:
+        queue = len(tokens_cache)
+    if queue > _DASH_STATS["peak_queue"]:
+        _DASH_STATS["peak_queue"] = queue
+    uptime = max(time.time() - _BOOT_TS, 1)
+    received = generation_stats.get("tokens_generated", 0)
+    return jsonify({
+        "queue_size": queue,
+        "peak_queue": _DASH_STATS["peak_queue"],
+        "total_received": received,
+        "total_served": _DASH_STATS["served"],
+        "total_expired": 0,
+        "total_duplicates": 0,
+        "workers_active": generation_stats.get("threads", 0) if solver_running else 0,
+        "tokens_per_minute": round(received / (uptime / 60), 1),
+        "uptime_seconds": int(uptime),
+        "last_received": None,
+        "last_served": None,
+        "status": generation_stats.get("status", "idle"),
+    })
+
+@app.route('/get-token', methods=['GET'])
+def dash_get_token():
+    get_new_tokens()
+    with token_lock:
+        if tokens_cache:
+            token = tokens_cache.pop(0)
+            _DASH_STATS["served"] += 1
+            return jsonify({"token": token, "remaining": len(tokens_cache)})
+    return jsonify({"error": "No tokens available"}), 404
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 6000))

@@ -1,0 +1,319 @@
+<!-- # Educational Cybersecurity measures purposes: sanitized for safe sharing, review, and classroom-style inspection of the code here. -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#050506">
+    <title>CN31 Token Server</title>
+    <link rel="stylesheet" href="/dashboard-assets/styles.css">
+  </head>
+  <body data-product="CN31 Token Server" data-mode="RAM queue" data-accent="cn31">
+    <div class="background-wrap" aria-hidden="true">
+      <div class="network-bg">
+        <svg viewBox="0 0 1000 520" preserveAspectRatio="xMidYMid slice">
+          <path class="network-line" d="M70 230 205 150 360 210 505 120 650 205 835 115 950 230"></path>
+          <path class="network-line" d="M140 360 285 285 420 340 565 260 720 330 895 260"></path>
+          <path class="network-line" d="M205 150 285 285 360 210 420 340 505 120 565 260 650 205 720 330"></path>
+          <circle class="network-dot" cx="70" cy="230" r="5"></circle>
+          <circle class="network-dot" cx="205" cy="150" r="6"></circle>
+          <circle class="network-dot" cx="360" cy="210" r="5"></circle>
+          <circle class="network-dot" cx="505" cy="120" r="7"></circle>
+          <circle class="network-dot" cx="650" cy="205" r="5"></circle>
+          <circle class="network-dot" cx="835" cy="115" r="6"></circle>
+          <circle class="network-dot" cx="950" cy="230" r="5"></circle>
+          <circle class="network-dot" cx="140" cy="360" r="5"></circle>
+          <circle class="network-dot" cx="285" cy="285" r="6"></circle>
+          <circle class="network-dot" cx="420" cy="340" r="5"></circle>
+          <circle class="network-dot" cx="565" cy="260" r="6"></circle>
+          <circle class="network-dot" cx="720" cy="330" r="5"></circle>
+          <circle class="network-dot" cx="895" cy="260" r="6"></circle>
+        </svg>
+      </div>
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-wash"></div>
+      <div class="beam beam-a"></div>
+      <div class="beam beam-b"></div>
+    </div>
+    <main class="shell">
+      <header class="topbar fade-up">
+        <section class="identity">
+          <div class="mark" data-icon="network"></div>
+          <div>
+            <h1>CN31 Token Server</h1>
+            <p class="eyebrow">Ocho CN31 Server</p>
+          </div>
+        </section>
+        <section class="toolbar">
+          <div class="mode-badge">Auto-Gen</div>
+          <div class="live-dot" id="statusBadge"><span></span>Online</div>
+          <div class="time-badge" id="clock">--:--:--</div>
+          <button class="theme-btn" id="themeToggle" type="button" aria-label="Current theme: dark" aria-haspopup="true" aria-expanded="false" aria-controls="themeMenu">
+            <svg id="themeIcon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+          </button>
+          <div class="theme-menu" id="themeMenu" role="menu">
+            <button class="theme-opt" type="button" data-theme="light" role="menuitem" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path></svg>
+              Light
+            </button>
+            <button class="theme-opt active" type="button" data-theme="dark" role="menuitem" aria-pressed="true">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+              Dark
+            </button>
+            <button class="theme-opt" type="button" data-theme="system" role="menuitem" aria-pressed="false">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+              System
+            </button>
+          </div>
+          <button class="text-button accent" id="getTokenButton" type="button" title="Fetch one token now">
+            <span data-icon="layers"></span>
+            <span>Get Token</span>
+          </button>
+          <button class="icon-button" id="refreshButton" type="button" aria-label="Refresh dashboard" title="Refresh">
+            <span data-icon="refresh"></span>
+          </button>
+        </section>
+      </header>
+
+      <section class="grid-4">
+        <article class="card amber fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><rect x="2" y="8" width="3" height="8" rx="1" fill="#f59e0b" opacity="0.5"/><rect x="7.5" y="4" width="3" height="12" rx="1" fill="#f59e0b" opacity="0.7"/><rect x="13" y="1" width="3" height="15" rx="1" fill="#f59e0b"/></svg>
+          </div>
+          <div class="card-label">Pool Size</div>
+          <div class="card-value"><span class="highlight" id="poolSize">0</span></div>
+          <div class="card-sub"><span class="dot"></span> tokens ready</div>
+        </article>
+        <article class="card orange fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><path d="M9 2v10M5 8l4 4 4-4" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 14h12" stroke="#f97316" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="card-label">Generated</div>
+          <div class="card-value"><span class="highlight" id="tokensGenerated">0</span></div>
+          <div class="card-sub"><span class="dot"></span> all time</div>
+        </article>
+        <article class="card amber fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><path d="M9 16V6M5 10l4-4 4 4" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 4h12" stroke="#f59e0b" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="card-label">Served</div>
+          <div class="card-value"><span class="highlight" id="tokensServed">0</span></div>
+          <div class="card-sub"><span class="dot"></span> dispatched</div>
+        </article>
+        <article class="card red fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#ef4444" stroke-width="1.5"/><path d="M9 6v4M9 12.5v.5" stroke="#ef4444" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="card-label">Expired</div>
+          <div class="card-value"><span class="highlight" id="tokensExpired">0</span></div>
+          <div class="card-sub"><span class="dot"></span> auto-cleaned</div>
+        </article>
+      </section>
+
+      <section class="grid-4">
+        <article class="card cyan fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><path d="M4 4l10 10M14 4L4 14" stroke="#22d3ee" stroke-width="1.8" stroke-linecap="round"/></svg>
+          </div>
+          <div class="card-label">Duplicates</div>
+          <div class="card-value"><span class="highlight" id="duplicatesRejected">0</span></div>
+          <div class="card-sub"><span class="dot"></span> rejected</div>
+        </article>
+        <article class="card orange fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><path d="M2 13l3-4 3 2 4-6 4 3" stroke="#f97316" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="card-label">Rate</div>
+          <div class="card-value"><span class="highlight" id="singleRequests">0</span></div>
+          <div class="card-sub"><span class="dot"></span> tok / min</div>
+        </article>
+        <article class="card amber fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><path d="M9 2l2.2 4.5 5 .7-3.6 3.5.8 5L9 13.5 4.6 15.7l.8-5L1.8 7.2l5-.7L9 2z" stroke="#f59e0b" stroke-width="1.3" stroke-linejoin="round" fill="rgba(245,158,11,0.15)"/></svg>
+          </div>
+          <div class="card-label">Peak Pool</div>
+          <div class="card-value"><span class="highlight" id="peakQueue">0</span></div>
+          <div class="card-sub"><span class="dot"></span> historical max</div>
+        </article>
+        <article class="card green fade-up">
+          <div class="card-icon">
+            <svg viewBox="0 0 18 18" fill="none"><path d="M3 9a6 6 0 1 1 12 0A6 6 0 0 1 3 9z" stroke="#10b981" stroke-width="1.5"/><path d="M9 6v3l2 1" stroke="#10b981" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div class="card-label">Workers</div>
+          <div class="card-value"><span class="highlight" id="activeWorkers">0</span></div>
+          <div class="card-sub"><span class="dot"></span> active now</div>
+        </article>
+      </section>
+
+      <div class="section fade-up">
+        <div class="section-hdr">
+          <div class="icon" data-icon="layers"></div>
+          <h2>Pool Capacity</h2>
+          <div class="line"></div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-header">
+            <span class="bar-title">Current Pool</span>
+            <span class="bar-value" id="bv-pool">0 / 0 peak</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill gradient-amber" id="bar-pool" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-header">
+            <span class="bar-title">Served vs Generated</span>
+            <span class="bar-value" id="bv-served">0 / 0</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill gradient-orange" id="bar-served" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="bar-group">
+          <div class="bar-header">
+            <span class="bar-title">Token TTL Lifecycle</span>
+            <span class="bar-value">14 min window</span>
+          </div>
+          <div class="bar-track">
+            <div class="bar-fill gradient-cyan" style="width:100%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2">
+        <div class="section fade-up">
+          <div class="section-hdr">
+            <div class="icon" data-icon="clock"></div>
+            <h2>Runtime</h2>
+            <div class="line"></div>
+          </div>
+          <div class="runtime-wrap">
+            <div class="ring-container">
+              <svg width="100" height="100" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(245,158,11,0.08)" stroke-width="6"/>
+                <circle id="ring-arc" cx="50" cy="50" r="40" fill="none" stroke="url(#rg-cn31)" stroke-width="6" stroke-dasharray="251" stroke-dashoffset="50" stroke-linecap="round"/>
+                <defs>
+                  <linearGradient id="rg-cn31" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#f97316"/>
+                    <stop offset="50%" stop-color="#f59e0b"/>
+                    <stop offset="100%" stop-color="#22d3ee"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div class="ring-center">
+                <div class="ring-number" id="ringUptime">0</div>
+                <div class="ring-unit">minutes</div>
+              </div>
+            </div>
+            <div class="stat-pills">
+              <div class="stat-pill">
+                <span class="stat-pill-label"><span class="indicator" style="background:#f97316"></span>Uptime</span>
+                <span class="stat-pill-value c-orange" id="uptimePill">0s</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-pill-label"><span class="indicator" style="background:#f59e0b"></span>Tok/min</span>
+                <span class="stat-pill-value c-amber" id="totalReqPill">0</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-pill-label"><span class="indicator" style="background:#22d3ee"></span>TTL</span>
+                <span class="stat-pill-value c-cyan">14 min</span>
+              </div>
+              <div class="stat-pill">
+                <span class="stat-pill-label"><span class="indicator" style="background:#10b981"></span>Peak</span>
+                <span class="stat-pill-value c-green" id="peakPill">0</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section fade-up">
+          <div class="section-hdr">
+            <div class="icon" data-icon="shield"></div>
+            <h2>API Endpoints</h2>
+            <div class="line"></div>
+          </div>
+          <div class="endpoint-table">
+            <div class="ep-row">
+              <span class="ep-method get">GET</span>
+              <span class="ep-path">/get-token</span>
+              <span class="ep-desc">grab 1 fresh token</span>
+            </div>
+            <div class="ep-row">
+              <span class="ep-method get">POST</span>
+              <span class="ep-path">/save-token</span>
+              <span class="ep-desc">add token to pool</span>
+            </div>
+            <div class="ep-row">
+              <span class="ep-method get">GET</span>
+              <span class="ep-path">/stats</span>
+              <span class="ep-desc">pool statistics</span>
+            </div>
+            <div class="ep-row">
+              <span class="ep-method get">GET</span>
+              <span class="ep-path">/health</span>
+              <span class="ep-desc">health check</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="token-actions fade-up">
+        <div class="action-grid">
+          <div class="action-card">
+            <div class="action-badge single-badge">Single</div>
+            <h3>Get Token</h3>
+            <p>Get one fresh CN31 token. Returns only unused tokens under 14 minutes old.</p>
+            <button class="fetch-btn btn-single" id="btnSingle" type="button">Get Token</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-section" id="resultSection" hidden>
+        <div class="token-result">
+          <div class="token-result-head">
+            <span class="token-label">Dispensed token</span>
+            <button class="icon-button small" id="copyTokenButton" type="button" aria-label="Copy token" title="Copy">
+              <span data-icon="layers"></span>
+            </button>
+          </div>
+          <code id="tokenValue"></code>
+        </div>
+      </div>
+
+      <div class="ts-strip fade-up">
+        <div class="ts-card">
+          <div class="ts-icon-wrap recv">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 2v8M5 7l3 3 3-3" stroke="#f97316" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 13h10" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="ts-info">
+            <div class="ts-label">Last Generated</div>
+            <div class="ts-val" id="lastReceived">--</div>
+          </div>
+        </div>
+        <div class="ts-card">
+          <div class="ts-icon-wrap serv">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M8 14V6M5 9l3-3 3 3" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M3 3h10" stroke="#f59e0b" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div class="ts-info">
+            <div class="ts-label">Last Served</div>
+            <div class="ts-val" id="lastServed">--</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer fade-up">
+        <div class="footer-l">CN31 TOKEN SERVER · FRESH TOKENS ONLY · AUTO-REFRESH 3S</div>
+        <div class="footer-r">TTL <span>14 MIN</span> · AUTO-GEN</div>
+      </div>
+    </main>
+    <script src="/dashboard-assets/app.js"></script>
+  </body>
+</html>
